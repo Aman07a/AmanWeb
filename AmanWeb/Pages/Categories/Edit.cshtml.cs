@@ -38,7 +38,7 @@ namespace AmanWeb.Pages.Categories
 
 			if (ModelState.IsValid)
 			{
-				await _db.Category.AddAsync(Category);
+				_db.Category.Update(Category);
 				await _db.SaveChangesAsync();
 				TempData["success"] = "Category updated successfully";
 				return RedirectToPage("Index");
