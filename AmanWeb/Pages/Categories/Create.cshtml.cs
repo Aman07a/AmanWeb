@@ -38,6 +38,7 @@ namespace AmanWeb.Pages.Categories
 				await _db.SaveChangesAsync();
 				return RedirectToPage("Index");
 			}
+
 			return Page();
 		}
 	}

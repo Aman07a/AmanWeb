@@ -10,13 +10,13 @@ using Microsoft.AspNetCore.Mvc.RazorPages;
 namespace AmanWeb.Pages.Categories
 {
 	[BindProperties]
-	public class EditModel : PageModel
+	public class DeleteModel : PageModel
 	{
 		private readonly ApplicationDbContext _db;
 
 		public Category Category { get; set; }
 
-		public EditModel(ApplicationDbContext db)
+		public DeleteModel(ApplicationDbContext db)
 		{
 			_db = db;
 		}
@@ -31,14 +31,11 @@ namespace AmanWeb.Pages.Categories
 
 		public async Task<IActionResult> OnPost()
 		{
-			if (Category.Name == Category.DisplayOrder.ToString())
-			{
-				ModelState.AddModelError("Category.Name", "The DisplayOrder cannot exactly match the Name.");
-			}
+			var categoryFromDb = _db.Category.Find(Category.Id);
 
-			if (ModelState.IsValid)
+			if (categoryFromDb != null)
 			{
-				await _db.Category.AddAsync(Category);
+				_db.Category.Remove(categoryFromDb);
 				await _db.SaveChangesAsync();
 				return RedirectToPage("Index");
 			}
