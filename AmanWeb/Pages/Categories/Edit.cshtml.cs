@@ -40,6 +40,7 @@ namespace AmanWeb.Pages.Categories
 			{
 				await _db.Category.AddAsync(Category);
 				await _db.SaveChangesAsync();
+				TempData["success"] = "Category updated successfully";
 				return RedirectToPage("Index");
 			}
 
