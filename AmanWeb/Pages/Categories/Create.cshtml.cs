@@ -10,9 +10,9 @@ using Microsoft.AspNetCore.Mvc.RazorPages;
 namespace AmanWeb.Pages.Categories
 {
 	[BindProperties]
-    public class CreateModel : PageModel
-    {
-        private readonly ApplicationDbContext _db;
+	public class CreateModel : PageModel
+	{
+		private readonly ApplicationDbContext _db;
 
 		public Category Category { get; set; }
 
@@ -22,13 +22,18 @@ namespace AmanWeb.Pages.Categories
 		}
 
 		public void OnGet()
-        {
-        }
-
-		public async Task<IActionResult> OnPost() {
-			await _db.Category.AddAsync(Category);
-			await _db.SaveChangesAsync();
-			return RedirectToPage("Index");
+		{
 		}
-    }
+
+		public async Task<IActionResult> OnPost()
+		{
+			if (ModelState.IsValid)
+			{
+				await _db.Category.AddAsync(Category);
+				await _db.SaveChangesAsync();
+				return RedirectToPage("Index");
+			}
+			return Page();
+		}
+	}
 }
